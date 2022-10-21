@@ -46,6 +46,25 @@ public class MainActivity extends AppCompatActivity {
             }//end of onClick method
         });
     }
-
+    // checking how much file is downloaded and updating the filesize
+    public int doOperation() {
+        //The range of ProgressDialog starts from 0 to 10000
+        while (fileSize <= 10000) {
+            fileSize++;
+            if (fileSize == 1000) {
+                return 10;
+            } else if (fileSize == 2000) {
+                return 20;
+            } else if (fileSize == 3000) {
+                return 30;
+            } else if (fileSize == 4000) {
+                return 40; // you can add more else if
+            }
+         /* else {
+                return 100;
+            }*/
+        }//end of while
+        return 100;
+    }//end of doOperation
 }
 
