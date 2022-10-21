@@ -2,25 +2,50 @@ package com.example.progress_bar_tutorial;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
     Button btnStartProgress;
+    ProgressDialog progressBar;
+    private int progressBarStatus = 0;
+    private Handler progressBarHandler = new Handler();
+    private long fileSize = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         btnStartProgress=findViewById(R.id.button);
-        btnStartProgress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               startActivity(new Intent(MainActivity.this,Next_page.class));
+        addListenerOnButtonClick();
+    }
+    public void addListenerOnButtonClick() {
+        btnStartProgress = findViewById(R.id.button);
+        btnStartProgress.setOnClickListener(new View.OnClickListener(){
 
-            }
+            @Override
+            public void onClick(View v) {
+                // creating progress bar dialog
+                progressBar = new ProgressDialog(v.getContext());
+                progressBar.setCancelable(true);
+                progressBar.setMessage("File downloading ...");
+                progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                progressBar.setProgress(0);
+                progressBar.setMax(100);
+                progressBar.show();
+                //reset progress bar and filesize status
+                progressBarStatus = 0;
+                fileSize = 0;
+
+
+                startActivity(new Intent(MainActivity.this,Next_page.class));
+            }//end of onClick method
         });
     }
+
 }
+
