@@ -40,9 +40,39 @@ public class MainActivity extends AppCompatActivity {
                 //reset progress bar and filesize status
                 progressBarStatus = 0;
                 fileSize = 0;
+                new Thread(new Runnable() {
+                    public void run() {
+                        while (progressBarStatus < 100) {
+                            // performing operation
+                            progressBarStatus = doOperation();
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            // Updating the progress bar
+                            progressBarHandler.post(new Runnable() {
+                                public void run() {
+                                    progressBar.setProgress(progressBarStatus);
+                                }
+                            });
+                        }
+                        // performing operation if file is downloaded,
+                        if (progressBarStatus >= 100) {
+                            // sleeping for 1 second after operation completed
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            // close the progress bar dialog
+                            progressBar.dismiss();
+                            startActivity(new Intent(MainActivity.this,Next_page.class));
+                        }
+                    }
+                }).start();
 
-
-                startActivity(new Intent(MainActivity.this,Next_page.class));
+//                startActivity(new Intent(MainActivity.this,Next_page.class));
             }//end of onClick method
         });
     }
