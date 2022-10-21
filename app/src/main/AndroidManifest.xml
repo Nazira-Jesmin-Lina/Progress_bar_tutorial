@@ -14,6 +14,9 @@
         android:theme="@style/Theme.Progress_bar_tutorial"
         tools:targetApi="31">
         <activity
+            android:name=".StartActivity"
+            android:exported="true" />
+        <activity
             android:name=".Next_page"
             android:exported="false" />
         <activity
